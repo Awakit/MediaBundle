@@ -42,9 +42,16 @@ media:
 ### Config
 
 Add theses to your config.yml
-see [ LiipImagineBundle Configuration ](http://symfony.com/doc/current/bundles/LiipImagineBundle/configuration.html)
+see [LiipImagineBundle Configuration](http://symfony.com/doc/current/bundles/LiipImagineBundle/configuration.html)
 
 ```yaml
+
+doctrine:
+    dbal:
+        types:
+            json: Doctrine\DBAL\Types\JsonArrayType
+            
+            
 awakit_media:
     upload_folder: /uploads
 

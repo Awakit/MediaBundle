@@ -1,7 +1,7 @@
 services:
     awakit.media.twig.extension:
         class: Awakit\MediaBundle\Twig\Extension\MediaExtension
-        arguments: [ "@awakit.media.provider.factory", "@twig" ]
+        arguments: [ "@awakit.media.provider.factory", "@twig", "@liip_imagine.cache.manager" ]
         tags:
             - { name: twig.extension }
 

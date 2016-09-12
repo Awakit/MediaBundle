@@ -12,6 +12,8 @@ use Awakit\MediaBundle\Entity\Media;
 use Awakit\MediaBundle\Provider\Exception\NotFoundProviderException;
 use Awakit\MediaBundle\Provider\Factory\ProviderFactory;
 use Awakit\MediaBundle\Twig\TokenParser\MediaTokenParser;
+use Awakit\MediaBundle\Twig\TokenParser\PathTokenParser;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 
 
 class MediaExtension extends \Twig_Extension
@@ -27,13 +29,19 @@ class MediaExtension extends \Twig_Extension
     protected $twig;
 
     /**
+     * @var CacheManager $cacheManager
+     */
+    protected $cacheManager;
+
+    /**
      * MediaExtension constructor.
      * @param \Awakit\MediaBundle\Provider\Factory\ProviderFactory $providerFactory
      */
-    public function __construct(ProviderFactory $providerFactory, \Twig_Environment $twig)
+    public function __construct(ProviderFactory $providerFactory, \Twig_Environment $twig, CacheManager $cacheManager)
     {
         $this->providerFactory = $providerFactory;
         $this->twig = $twig;
+        $this->cacheManager = $cacheManager;
     }
 
 
@@ -44,12 +52,13 @@ class MediaExtension extends \Twig_Extension
     {
         return array(
             new MediaTokenParser($this->getName()),
+            new PathTokenParser($this->getName()),
         );
     }
 
     public function getName()
     {
-        return 'media';
+        return 'awakit_media';
     }
 
     public function media(Media $media = null, $format)
@@ -62,6 +71,19 @@ class MediaExtension extends \Twig_Extension
         }
 
         return $provider->render($this->twig, $media, array('format' => $format));
+
+    }
+
+
+    public function path(Media $media = null, $format)
+    {
+        try {
+            $provider = $this->providerFactory->getProvider($media);
+        }
+        catch (NotFoundProviderException $e) {
+            return '';
+        }
+        return $this->cacheManager->getBrowserPath($provider->getPath($media), $format);
 
     }
 

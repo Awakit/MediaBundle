@@ -3,6 +3,7 @@
 namespace Awakit\MediaBundle\Provider;
 
 use Awakit\MediaBundle\Entity\Media;
+use Awakit\MediaBundle\Provider\Exception\InvalidMimeTypeException;
 use SensioLabs\Security\Exception\RuntimeException;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -86,6 +87,14 @@ interface ProviderInterface {
      * @return mixed
      */
     public function addCreateForm(FormBuilderInterface $builder);
+
+    /**
+     * return path of the media, depends on the media ^^
+     * @param \Awakit\MediaBundle\Entity\Media $oMedia
+     * @return mixed
+     */
+    public function getPath(Media $oMedia);
+
 
     
 }
