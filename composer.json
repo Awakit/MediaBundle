@@ -1,0 +1,30 @@
+{
+    "name" : "awakit/media-bundle",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Jonathan Gauvain",
+        "email" : "jgn@awakit.com"
+    }],
+    "license" : [
+        "MIT"
+    ],
+	"prefer-stable": true,
+    "require" : {
+        "php": ">=5.5.9",
+        "symfony/symfony": "3.1.*",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "sensio/framework-extra-bundle": "^3.0.2",
+        "liip/imagine-bundle": "^1.6",
+        "twig/extensions": "^1.3",
+        "symfony/assetic-bundle": "^2.8",
+        "knplabs/gaufrette": "^0.2.1"
+
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Awakit\\MediaBundle" : ""
+        }
+    },
+    "target-dir" : "Awakit/MediaBundle"
+}

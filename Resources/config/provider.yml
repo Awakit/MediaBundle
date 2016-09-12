@@ -1,0 +1,19 @@
+services:
+    awakit.media.provider.factory:
+        class: Awakit\MediaBundle\Provider\Factory\ProviderFactory
+
+    awakit.media.file.provider:
+        class: Awakit\MediaBundle\Provider\FileProvider
+        arguments: [ "%assetic.write_to%", "%awakit.media.upload_folder%" ]
+        tags:
+            - { name: provider, alias: file }
+
+    awakit.media.image.provider:
+        class: Awakit\MediaBundle\Provider\ImageProvider
+        parent: awakit.media.file.provider
+        tags:
+            - { name: provider, alias: image }
+
+
+        
+    

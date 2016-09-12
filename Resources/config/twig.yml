@@ -1,0 +1,16 @@
+services:
+    awakit.media.twig.extension:
+        class: Awakit\MediaBundle\Twig\Extension\MediaExtension
+        arguments: [ "@awakit.media.provider.factory", "@twig" ]
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+            - { name: twig.extension }
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }

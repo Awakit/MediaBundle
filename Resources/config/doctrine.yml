@@ -1,0 +1,12 @@
+services:
+    awakit.media.manager:
+        class: Awakit\MediaBundle\Manager\MediaManager
+        decorates: doctrine.orm.default_entity_manager
+        arguments: ["@awakit.media.manager.inner"]
+        
+    awakit.media.subscriber:
+        class: Awakit\MediaBundle\Listener\MediaSubscriber
+        arguments:
+            - "@awakit.media.provider.factory"
+        tags:
+            - { name: doctrine.event_subscriber }

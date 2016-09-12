@@ -1,0 +1,6 @@
+services:
+    awakit.media.type:
+        class: Awakit\MediaBundle\Form\MediaType
+        arguments: ["@awakit.media.provider.factory"]
+        tags:
+            - { name: form.type }
