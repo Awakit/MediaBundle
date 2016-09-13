@@ -1,20 +1,21 @@
 <?php
 namespace Awakit\MediaBundle\Manager;
 
-use Awakit\MediaBundle\Entity\Media;
-use Doctrine\ORM\Decorator\EntityManagerDecorator;
+use Awakit\MediaBundle\Repository\MediaRepository;
 
 /**
  * @author Donjohn
  */ 
     
-class MediaManager extends EntityManagerDecorator
+class MediaManager extends BaseManager
 {
 
-    public function save(Media $oMedia, $flush = true)
+    /**
+     * @return \Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository|MediaRepository
+     */
+    public function getRepository()
     {
-        $this->persist($oMedia);
-        if ($flush) $this->flush();
+        return parent::getRepository();
     }
 
 }

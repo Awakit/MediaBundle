@@ -1,8 +1,7 @@
 services:
     awakit.media.manager:
         class: Awakit\MediaBundle\Manager\MediaManager
-        decorates: doctrine.orm.default_entity_manager
-        arguments: ["@awakit.media.manager.inner"]
+        arguments: ["@doctrine.orm.entity_manager", 'AwakitMediaBundle:Media']
         
     awakit.media.subscriber:
         class: Awakit\MediaBundle\Listener\MediaSubscriber
