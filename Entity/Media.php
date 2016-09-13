@@ -47,7 +47,7 @@ class Media
     /**
      * @var string full url of the media
      */
-    protected $filePath;
+    protected $mediaPath;
     
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -105,7 +105,7 @@ class Media
      * init old value
      * @return Media
      */
-    public function setOldMedia()
+    public function initOldMedia()
     {
         $this->oldMimeType=$this->mimeType;
         $this->oldFilename=$this->filename;
@@ -320,7 +320,7 @@ class Media
      */
     public function setBinaryContent($binaryContent)
     {
-        $this->setOldMedia();
+        $this->initOldMedia();
         $this->binaryContent = $binaryContent;
         return $this;
     }
@@ -412,14 +412,14 @@ class Media
         return $this->oldFilename;
     }
 
-    public function setFilePath($filePath)
+    public function setMediaPath($mediaPath)
     {
-        $this->filePath = $filePath;
+        $this->mediaPath = $mediaPath;
     }
 
-    public function getFilePath()
+    public function getMediaPath()
     {
-        return $this->filePath;
+        return $this->mediaPath;
     }
 
     /**

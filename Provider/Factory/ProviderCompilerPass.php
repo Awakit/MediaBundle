@@ -19,7 +19,7 @@ class ProviderCompilerPass implements CompilerPassInterface
         );
 
         $taggedServices = $container->findTaggedServiceIds(
-            'provider'
+            'media.provider'
         );        
         
         foreach ($taggedServices as $id => $tagAttributes) {

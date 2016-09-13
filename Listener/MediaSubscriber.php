@@ -54,7 +54,7 @@ class MediaSubscriber implements EventSubscriber {
     public function postLoad(LifecycleEventArgs $args) {
         $oMedia = $args->getEntity();
         if ($oMedia instanceof Media ) {
-            $oMedia->setOldMedia(); //in case you delete it ^^
+            $oMedia->initOldMedia(); //in case you delete it ^^
             $this->providerFactory->getProvider($oMedia)->postLoad($oMedia);
         }
     }

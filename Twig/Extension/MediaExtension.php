@@ -13,7 +13,6 @@ use Awakit\MediaBundle\Provider\Exception\NotFoundProviderException;
 use Awakit\MediaBundle\Provider\Factory\ProviderFactory;
 use Awakit\MediaBundle\Twig\TokenParser\MediaTokenParser;
 use Awakit\MediaBundle\Twig\TokenParser\PathTokenParser;
-use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 
 
 class MediaExtension extends \Twig_Extension
@@ -29,19 +28,13 @@ class MediaExtension extends \Twig_Extension
     protected $twig;
 
     /**
-     * @var CacheManager $cacheManager
-     */
-    protected $cacheManager;
-
-    /**
      * MediaExtension constructor.
      * @param \Awakit\MediaBundle\Provider\Factory\ProviderFactory $providerFactory
      */
-    public function __construct(ProviderFactory $providerFactory, \Twig_Environment $twig, CacheManager $cacheManager)
+    public function __construct(ProviderFactory $providerFactory, \Twig_Environment $twig)
     {
         $this->providerFactory = $providerFactory;
         $this->twig = $twig;
-        $this->cacheManager = $cacheManager;
     }
 
 
@@ -83,7 +76,7 @@ class MediaExtension extends \Twig_Extension
         catch (NotFoundProviderException $e) {
             return '';
         }
-        return $this->cacheManager->getBrowserPath($provider->getPath($media), $format);
+        return $provider->getPath($media, $format);
 
     }
 

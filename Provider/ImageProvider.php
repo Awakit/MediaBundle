@@ -3,7 +3,7 @@
 namespace Awakit\MediaBundle\Provider;
 
 use Awakit\MediaBundle\Entity\Media;
-use Imagine\Imagick\Imagine;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 
 /**
  * description 
@@ -12,6 +12,16 @@ use Imagine\Imagick\Imagine;
 class ImageProvider extends FileProvider  {
     
     public $allowedTypes=array('image/jpeg');
+    /**
+     * @var CacheManager $cacheManager
+     */
+    protected $cacheManager;
+
+    public function __construct($rootFolder, $uploadFolder, CacheManager $cacheManager)
+    {
+        $this->cacheManager = $cacheManager;
+        parent::__construct($rootFolder, $uploadFolder);
+    }
 
     public function extractMetaData(Media $oMedia)
     {
@@ -22,6 +32,12 @@ class ImageProvider extends FileProvider  {
 //        } catch (\Exception $e) {
 //            //throw new \RuntimeException($e->getMessage());
 //        }
+    }
+
+    public function getPath(Media $oMedia, $format= null)
+    {
+        $path = parent::getPath($oMedia);
+        return  $format ? $this->cacheManager->getBrowserPath($path, $format): $path;
     }
     
 }

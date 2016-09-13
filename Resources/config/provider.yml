@@ -6,13 +6,13 @@ services:
         class: Awakit\MediaBundle\Provider\FileProvider
         arguments: [ "%assetic.write_to%", "%awakit.media.upload_folder%" ]
         tags:
-            - { name: provider, alias: file }
+            - { name: media.provider, alias: file }
 
     awakit.media.image.provider:
         class: Awakit\MediaBundle\Provider\ImageProvider
-        parent: awakit.media.file.provider
+        arguments: [ "%assetic.write_to%", "%awakit.media.upload_folder%", "@liip_imagine.cache.manager" ]
         tags:
-            - { name: provider, alias: image }
+            - { name: media.provider, alias: image }
 
 
         

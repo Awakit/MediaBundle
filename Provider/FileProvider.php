@@ -4,7 +4,6 @@ namespace Awakit\MediaBundle\Provider;
 
 use Awakit\MediaBundle\Entity\Media;
 use Gaufrette\Adapter\Local;
-use SensioLabs\Security\Exception\RuntimeException;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -44,7 +43,7 @@ class FileProvider extends BaseProvider {
     }
 
 
-    public function getPath(Media $oMedia)
+    public function getPath(Media $oMedia, $format= null)
     {
         $firstLevel=100000;
         $secondLevel=1000;
@@ -80,7 +79,8 @@ class FileProvider extends BaseProvider {
      */
     public function postLoad(Media $oMedia)
     {
-        return true;
+        parent::postPersist($oMedia);
+        return $this;
     }
 
     public function postRemove(Media $oMedia)
