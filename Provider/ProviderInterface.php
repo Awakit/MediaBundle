@@ -55,12 +55,6 @@ interface ProviderInterface {
     public function postUpdate(Media $oMedia);
 
     /**
-     * function called on postLoad Dcotrine Event on MEdia entity
-     * @param Media $oMedia
-     */
-    public function postLoad(Media $oMedia);
-
-    /**
      * function called on postRemove Dcotrine Event on MEdia entity
      * @param Media $oMedia
      */

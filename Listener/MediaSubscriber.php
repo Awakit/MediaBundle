@@ -23,8 +23,7 @@ class MediaSubscriber implements EventSubscriber {
     public function getSubscribedEvents() {
         return array(
             'postPersist',
-            'postUpdate',
-            'postLoad',
+            'postUpdate'
         );
     }
     
@@ -44,19 +43,6 @@ class MediaSubscriber implements EventSubscriber {
     public function postUpdate(LifecycleEventArgs $args) {
         $oMedia = $args->getEntity();
         if ($oMedia instanceof Media) $this->providerFactory->getProvider($oMedia)->postUpdate($oMedia);
-    }
-
-
-    /**
-     * event declenché apres le mapping de l'objet, sert à chopper le path de l'image
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     */
-    public function postLoad(LifecycleEventArgs $args) {
-        $oMedia = $args->getEntity();
-        if ($oMedia instanceof Media ) {
-            $oMedia->initOldMedia(); //in case you delete it ^^
-            $this->providerFactory->getProvider($oMedia)->postLoad($oMedia);
-        }
     }
 
     

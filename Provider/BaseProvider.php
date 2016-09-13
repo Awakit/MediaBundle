@@ -52,10 +52,5 @@ abstract class BaseProvider implements ProviderInterface {
         return true;
     }
 
-    public function postLoad(Media $oMedia)
-    {
-        $oMedia->setMediaPath($this->getPath($oMedia));
-    }
-
 
 }

@@ -77,12 +77,6 @@ class FileProvider extends BaseProvider {
     /**
      * @inheritdoc
      */
-    public function postLoad(Media $oMedia)
-    {
-        parent::postPersist($oMedia);
-        return $this;
-    }
-
     public function postRemove(Media $oMedia)
     {
         return $this->filesystem->delete($this->getPath($oMedia));
