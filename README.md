@@ -25,6 +25,7 @@ Add thoses bundles to your AppKernel.php
 ```PHP
     new Liip\ImagineBundle\LiipImagineBundle(),
     new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+    new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
     new Awakit\MediaBundle\AwakitMediaBundle(),
 ```
 

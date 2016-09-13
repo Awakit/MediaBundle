@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Debug\Exception\ContextErrorException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 
 
@@ -18,6 +19,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Media
 {
+    use ORMBehaviors\Timestampable\Timestampable;
+
     
     /**
      * @ORM\Id

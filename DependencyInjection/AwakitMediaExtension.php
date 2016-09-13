@@ -4,7 +4,6 @@ namespace Awakit\MediaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -32,4 +31,5 @@ class AwakitMediaExtension extends Extension
         $container->setParameter('awakit.media.upload_folder', $config['upload_folder']);
 
     }
+
 }
