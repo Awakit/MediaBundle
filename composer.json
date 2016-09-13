@@ -1,5 +1,5 @@
 {
-    "name" : "awakit/mediaèbundle",
+    "name" : "awakit/media-bundle",
     "type" : "symfony-bundle",
     "authors" : [{
         "name" : "Jonathan Gauvain",
