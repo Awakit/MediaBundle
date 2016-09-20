@@ -43,6 +43,12 @@ interface ProviderInterface {
     public function extractMetaData(Media $oMedia);
 
     /**
+     * function called on prePersist Dcotrine Event on MEdia entity
+     * @param Media $oMedia
+     */
+    public function prePersist(Media $oMedia);
+
+    /**
      * function called on postPerstist Dcotrine Event on MEdia entity
      * @param Media $oMedia
      */
@@ -61,12 +67,6 @@ interface ProviderInterface {
     public function postRemove(Media $oMedia);
 
 
-    /**
-     * function called by DataTransformer
-     * @param \Awakit\MediaBundle\Entity\Media $oMedia
-     * @return mixed
-     */
-    public function reverseTransform(Media $oMedia);
     /**
      * add edit fields for the defined provider
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

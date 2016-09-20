@@ -391,6 +391,7 @@ class Media
      */
     public function setFilename($filename)
     {
+        $this->addMetadata('filename', $filename);
         $this->filename = $filename;
 
         return $this;

@@ -42,22 +42,11 @@ class MediaDataTransformer implements DataTransformerInterface
         if (!($oMedia instanceof Media) || (!$oMedia->getBinaryContent() instanceof \SplFileInfo)) return $oMedia;
 
 
-        $mimeType = $oMedia->getBinaryContent()->getMimeType();
         try {
-            $this->provider->validateMimeType($mimeType);
-            $oMedia->setMimeType($mimeType);
-        } catch (InvalidMimeTypeException $e) {
-            throw new TransformationFailedException($e->getMessage());
-        }
-
-//        $this->provider->reverseTransform($oMedia);
-        try {
-            $this->provider->reverseTransform($oMedia);
+            $this->provider->prePersist($oMedia);
         } catch (\Exception $e) {
             throw new TransformationFailedException('invalid file');
         }
-
-        $oMedia->setProviderName($this->provider->getAlias());
 
 
         return $oMedia;

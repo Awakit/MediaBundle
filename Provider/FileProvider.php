@@ -54,6 +54,30 @@ class FileProvider extends BaseProvider {
         return sprintf('%s/%04s/%02s/%s', $this->uploadFolder, $rep_first_level + 1, $rep_second_level + 1, $oMedia->getFilename() );
     }
 
+
+    /**
+     * @inheritdoc
+     */
+    public function prePersist(Media $oMedia)
+    {
+        if ($oMedia->getBinaryContent() instanceof UploadedFile)
+            $fileName = $oMedia->getBinaryContent()->getClientOriginalName();
+        elseif ($oMedia->getBinaryContent() instanceof File)
+            $fileName = $oMedia->getBinaryContent()->getBasename();
+
+        if (empty($fileName)) throw new \RuntimeException('invalid file');
+
+        $this->extractMetaData($oMedia);
+
+        $mimeType = $oMedia->getBinaryContent()->getMimeType();
+        $this->validateMimeType($mimeType);
+        $oMedia->setMimeType($mimeType);
+        $oMedia->setProviderName($this->getAlias());
+        $oMedia->setName($oMedia->getName() ? : $fileName); //to keep oldname
+        $oMedia->setFilename(sha1($oMedia->getName() . rand(11111, 99999)) . '.' . $oMedia->getBinaryContent()->guessExtension());
+
+    }
+
     /**
      * @inheritdoc
      */
@@ -74,6 +98,8 @@ class FileProvider extends BaseProvider {
         return $this->postPersist($oMedia);
     }
 
+
+
     /**
      * @inheritdoc
      */
@@ -90,22 +116,6 @@ class FileProvider extends BaseProvider {
     public function addCreateForm(FormBuilderInterface $builder)
     {
         $builder->add('binaryContent', FileType::class);
-    }
-
-    public function reverseTransform(Media $oMedia)
-    {
-        if ($oMedia->getBinaryContent() instanceof UploadedFile)
-            $fileName = $oMedia->getBinaryContent()->getClientOriginalName();
-        elseif ($oMedia->getBinaryContent() instanceof File)
-            $fileName = $oMedia->getBinaryContent()->getBasename();
-
-        if (empty($fileName)) throw new \RuntimeException('invalid file');
-
-        $this->extractMetaData($oMedia);
-        $oMedia->setName($oMedia->getName() ? : $fileName); //to keep oldname
-        $oMedia->addMetadata('filename', $fileName);
-        $oMedia->setFilename(sha1($oMedia->getName() . rand(11111, 99999)) . '.' . $oMedia->getBinaryContent()->guessExtension());
-
     }
 
 
