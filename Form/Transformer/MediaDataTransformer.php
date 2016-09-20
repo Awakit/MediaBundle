@@ -2,7 +2,6 @@
 
 namespace Awakit\MediaBundle\Form\Transformer;
 
-use Awakit\MediaBundle\Provider\Exception\InvalidMimeTypeException;
 use Awakit\MediaBundle\Provider\ProviderInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
