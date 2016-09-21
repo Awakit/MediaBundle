@@ -11,7 +11,7 @@ use Liip\ImagineBundle\Imagine\Cache\CacheManager;
  */
 class ImageProvider extends FileProvider  {
     
-    public $allowedTypes=array('image/jpeg', 'image/png');
+    public $allowedTypes=array('image/jpeg');
     /**
      * @var CacheManager $cacheManager
      */
@@ -37,7 +37,7 @@ class ImageProvider extends FileProvider  {
     public function getPath(Media $oMedia, $format= null)
     {
         $path = parent::getPath($oMedia);
-        return  $format || $format!='reference' ? $this->cacheManager->getBrowserPath($path, $format) : $path;
+        return  ($format && $format!='reference') ? $this->cacheManager->getBrowserPath($path, $format) : $path;
     }
     
 }
