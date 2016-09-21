@@ -27,12 +27,12 @@ class AwakitMediaExtension extends Extension
         $loader->load('twig.yml');
 
         //until liiPbundle 2.0 is released, i need these filter
-        if (!class_exists('Liip\ImagineBundle\Imagine\Filter\Loader\ScaleFilterLoader')) //$loader->load('imagine.yml');
+        if (!class_exists('Liip\ImagineBundle\Imagine\Filter\Loader\ScaleFilterLoader')) $loader->load('imagine.yml');
 
         $config = $this->processConfiguration(new Configuration(), $configs);
-
         $container->setParameter('awakit.media.upload_folder', $config['upload_folder']);
 
     }
+
 
 }

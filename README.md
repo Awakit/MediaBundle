@@ -54,7 +54,7 @@ doctrine:
             
             
 awakit_media:
-    upload_folder: /uploads
+    upload_folder: /media
 
 liip_imagine:
     filter_sets:
@@ -66,3 +66,31 @@ liip_imagine:
                 thumbnail: { size: [120, 90], mode: outbound }
 ```
     
+If you want another folder for your uploads, don't forget to modify liip setting as well
+
+```
+awakit_media:
+    upload_folder: /AnotherFolder
+
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                cache_prefix: AnotherFolder/cache
+```
+
+
+### Twig
+To insert a media in the twig, use the block with a filter name, defined in the liip_imagine.filter_sets section
+```
+{% media mediaObject, '<format>' %}
+```
+
+you can also ask for the path directly
+```
+{% path media, '<format>' %}
+```
+
+#### for the Image only : 
+format = reference
+If you set the format to 'reference' in the twig call, it well return the original media uploaded with any filter or post processing.

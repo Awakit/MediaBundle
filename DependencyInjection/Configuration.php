@@ -21,9 +21,37 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('upload_folder')->isRequired()->cannotBeEmpty()->end()
+                ->append($this->addLiipImagineNode())
             ->end()
         ->end();
 
         return $treeBuilder;
+    }
+
+
+    public function addLiipImagineNode()
+    {
+        $treeBuilder = new TreeBuilder();
+        $liipNode = $treeBuilder->root('liip_imagine');
+
+        $liipNode->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('resolvers')->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('default')->addDefaultsIfNotSet()
+                            ->children()
+                                ->arrayNode('web_path')->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('cache_prefix')->defaultValue('toto/cache')->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ->end();
+
+        return $liipNode;
     }
 }
