@@ -83,7 +83,8 @@ liip_imagine:
 For the moment only Image and File provider are available.
 
 ### Twig
-To insert a media in the twig, use the block with a filter name, defined in the liip_imagine.filter_sets section
+To insert a media in the twig, use the block with an optionnal filter name, defined in the liip_imagine.filter_sets section.
+If you don't provider a filter name, 'reference' format is default. it will return the original media uploaded with any filter or post processing.
 ```
 {% media mediaObject, '<format>' %}
 ```
@@ -92,10 +93,6 @@ you can also ask for the path directly
 ```
 {% path media, '<format>' %}
 ```
-
-##### for the ImageProvider only : 
-format = reference
-If you set the format to 'reference' in the twig call, it well return the original media uploaded with any filter or post processing.
 
 
 ### FormType

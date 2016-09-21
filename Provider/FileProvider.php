@@ -38,7 +38,7 @@ class FileProvider extends BaseProvider {
     }
 
     public function render( \Twig_Environment $twig, Media $media, $options = array() ) {
-        $options['mediaPath'] = $this->getPath($media);
+        $options['mediaPath'] = $this->getPath($media, isset($options['format']) ? $options['format'] : null );
         return parent::render($twig, $media, $options);
     }
 

@@ -30,12 +30,13 @@ class PathTokenParser extends \Twig_TokenParser
     public function parse(\Twig_Token $token)
     {
         $media = $this->parser->getExpressionParser()->parseExpression();
+        $format = new \Twig_Node_Expression_Constant('reference',$token->getLine());
 
-        $this->parser->getStream()->next();
-
-        $format = $this->parser->getExpressionParser()->parseExpression();
-
-        $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
+        if (!$this->parser->getStream()->nextIf(\Twig_Token::BLOCK_END_TYPE)) {
+            $this->parser->getStream()->next();
+            $format = $this->parser->getExpressionParser()->parseExpression();
+            $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
+        }
 
         return new PathNode($this->extensionName, $media, $format, $token->getLine(), $this->getTag());
     }
