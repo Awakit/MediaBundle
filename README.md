@@ -79,6 +79,8 @@ liip_imagine:
                 cache_prefix: AnotherFolder/cache
 ```
 
+###Providers
+For the moment only Image and File provider are available.
 
 ### Twig
 To insert a media in the twig, use the block with a filter name, defined in the liip_imagine.filter_sets section
@@ -91,6 +93,12 @@ you can also ask for the path directly
 {% path media, '<format>' %}
 ```
 
-#### for the Image only : 
+##### for the ImageProvider only : 
 format = reference
 If you set the format to 'reference' in the twig call, it well return the original media uploaded with any filter or post processing.
+
+
+### FormType
+a Awakit\MediaBundle\Form\Type\MediaType is available. provider option is mandatory.
+```
+$builder->add(<fieldName>,MediaType::class, array('provider'=> 'image'));
