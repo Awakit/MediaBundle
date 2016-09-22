@@ -7,6 +7,8 @@ use Symfony\Component\Debug\Exception\ContextErrorException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 
@@ -26,17 +28,21 @@ class Media
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"api"})
     */
     protected $id;
     
     /**
      * @ORM\Column(type="string", nullable=false)
+     * @Groups({"api","api_input"})
     */
     protected $name;
 
     /**
      * @var string
      * @ORM\Column(type="string", nullable=false)
+     * @Groups({"api","api_input"})
+     * @Assert\NotBlank
      */
     protected $providerName;
     
@@ -44,16 +50,21 @@ class Media
      * @ORM\Column(type="string", nullable=false)
      */
     protected $filename;
-    
+
+    /**
+     * @var string old filename to delete old file after update
+     */
     protected $oldFilename;
 
     /**
-     * @var string full url of the media
+     * @var array collection of paths
+     * @Groups({"api"})
      */
-    protected $mediaPath;
-    
+    protected $paths=array();
+
     /**
      * @ORM\Column(type="string", nullable=false)
+     * @Groups({"api"})
      */
     protected $mimeType;
     
@@ -61,35 +72,25 @@ class Media
     
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"api"})
      */
     protected $enabled=true;
     
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"api"})
      */
     protected $description;
     
     /**
      * @ORM\Column(type="json_array", nullable=true)
+     * @Groups({"api"})
      */
     protected $metadata=array();
-    
+
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"api_input"})
      */
-    protected $width;
-    
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $height;
-    
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    protected $position=0;
-    
-    
     protected $binaryContent;
 
     /**
@@ -248,75 +249,6 @@ class Media
     }
 
     /**
-     * Set width
-     *
-     * @param integer $width
-     * @return Media
-     */
-    public function setWidth($width)
-    {
-        $this->width = $width;
-
-        return $this;
-    }
-
-    /**
-     * Get width
-     *
-     * @return integer 
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
-     * Set height
-     *
-     * @param integer $height
-     * @return Media
-     */
-    public function setHeight($height)
-    {
-        $this->height = $height;
-
-        return $this;
-    }
-
-    /**
-     * Get height
-     *
-     * @return integer 
-     */
-    public function getHeight()
-    {
-        return $this->height;
-    }
-
-    /**
-     * Set position
-     *
-     * @param integer $position
-     * @return Media
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Get position
-     *
-     * @return integer 
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
      * init l'old media et fous le contenu d'un binaire dans la variable.
      * @param $binaryContent
      * @return $this
@@ -416,16 +348,6 @@ class Media
         return $this->oldFilename;
     }
 
-    public function setMediaPath($mediaPath)
-    {
-        $this->mediaPath = $mediaPath;
-    }
-
-    public function getMediaPath()
-    {
-        return $this->mediaPath;
-    }
-
     /**
      * Set providerName
      *
@@ -449,4 +371,22 @@ class Media
     {
         return $this->providerName;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPaths()
+    {
+        return $this->paths;
+    }
+
+    /**
+     * @param mixed $paths
+     */
+    public function setPaths($paths)
+    {
+        $this->paths = $paths;
+    }
+
+
 }

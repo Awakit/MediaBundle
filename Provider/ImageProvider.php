@@ -4,6 +4,7 @@ namespace Awakit\MediaBundle\Provider;
 
 use Awakit\MediaBundle\Entity\Media;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Liip\ImagineBundle\Imagine\Filter\FilterConfiguration;
 
 /**
  * description 
@@ -16,10 +17,15 @@ class ImageProvider extends FileProvider  {
      * @var CacheManager $cacheManager
      */
     protected $cacheManager;
+    /**
+     * @var FilterConfiguration $filterConfiguration
+     */
+    protected $filterConfiguration;
 
-    public function __construct($rootFolder, $uploadFolder, CacheManager $cacheManager)
+    public function __construct($rootFolder, $uploadFolder, CacheManager $cacheManager, FilterConfiguration $filterConfiguration)
     {
         $this->cacheManager = $cacheManager;
+        $this->filterConfiguration = $filterConfiguration;
         parent::__construct($rootFolder, $uploadFolder);
     }
 
@@ -34,10 +40,20 @@ class ImageProvider extends FileProvider  {
 //        }
     }
 
-    public function getPath(Media $oMedia, $format= null)
+    /**
+     * @inheritdoc
+     */
+    public function postLoad(Media $oMedia)
+    {
+        $paths = array('reference' => $this->getPath($oMedia));
+        foreach ($this->filterConfiguration->all() as $filter=> $configuration) $paths[$filter] = $this->getPath($oMedia, $filter);
+        $oMedia->setPaths($paths);
+    }
+
+    public function getPath(Media $oMedia, $filter= null)
     {
         $path = parent::getPath($oMedia);
-        return  ($format && $format!='reference') ? $this->cacheManager->getBrowserPath($path, $format) : $path;
+        return  ($filter && $filter!='reference') ? $this->cacheManager->getBrowserPath($path, $filter) : $path;
     }
     
 }

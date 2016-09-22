@@ -19,6 +19,7 @@ class AwakitMediaExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $bundles = $container->getParameter('kernel.bundles');
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('provider.yml');
@@ -26,8 +27,10 @@ class AwakitMediaExtension extends Extension
         $loader->load('form.yml');
         $loader->load('twig.yml');
 
-        //until liiPbundle 2.0 is released, i need these filter
-        if (!class_exists('Liip\ImagineBundle\Imagine\Filter\Loader\ScaleFilterLoader')) $loader->load('imagine.yml');
+        //until liiPbundle 2.0 is released, i need this filter
+        if (isset($bundles['LiipImagineBundle']) && !class_exists('Liip\ImagineBundle\Imagine\Filter\Loader\ScaleFilterLoader')) $loader->load('imagine.yml');
+
+        if (isset($bundles['DunglasApiBundle'])) $loader->load('api.yml');
 
         $config = $this->processConfiguration(new Configuration(), $configs);
         $container->setParameter('awakit.media.upload_folder', $config['upload_folder']);

@@ -54,8 +54,9 @@ class MediaExtension extends \Twig_Extension
         return 'awakit_media';
     }
 
-    public function media(Media $media = null, $format)
+    public function media(Media $media = null, $filter)
     {
+
         try {
             $provider = $this->providerFactory->getProvider($media);
         }
@@ -63,12 +64,12 @@ class MediaExtension extends \Twig_Extension
             return '';
         }
 
-        return $provider->render($this->twig, $media, array('format' => $format));
+        return $provider->render($this->twig, $media, array('filter' => $filter));
 
     }
 
 
-    public function path(Media $media = null, $format)
+    public function path(Media $media = null, $filter)
     {
         try {
             $provider = $this->providerFactory->getProvider($media);
@@ -76,7 +77,7 @@ class MediaExtension extends \Twig_Extension
         catch (NotFoundProviderException $e) {
             return '';
         }
-        return $provider->getPath($media, $format);
+        return $provider->getPath($media, $filter);
 
     }
 

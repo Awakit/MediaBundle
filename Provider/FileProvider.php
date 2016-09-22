@@ -38,12 +38,12 @@ class FileProvider extends BaseProvider {
     }
 
     public function render( \Twig_Environment $twig, Media $media, $options = array() ) {
-        $options['mediaPath'] = $this->getPath($media, isset($options['format']) ? $options['format'] : null );
+        $options['mediaPath'] = $this->getPath($media, isset($options['filter']) ? $options['filter'] : null );
         return parent::render($twig, $media, $options);
     }
 
 
-    public function getPath(Media $oMedia, $format= null)
+    public function getPath(Media $oMedia, $filter= null)
     {
         $firstLevel=100000;
         $secondLevel=1000;
@@ -54,7 +54,13 @@ class FileProvider extends BaseProvider {
         return sprintf('%s/%04s/%02s/%s', $this->uploadFolder, $rep_first_level + 1, $rep_second_level + 1, $oMedia->getFilename() );
     }
 
-
+    /**
+     * @inheritdoc
+     */
+    public function postLoad(Media $oMedia)
+    {
+        $oMedia->setPaths(array('reference' => $this->getPath($oMedia)));
+    }
     /**
      * @inheritdoc
      */

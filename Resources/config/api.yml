@@ -1,0 +1,9 @@
+services:
+    awakit_media.api.resource.media:
+        parent: "api.resource"
+        arguments: ['Awakit\MediaBundle\Entity\Media']
+        calls:
+            - [initNormalizationContext, [{ groups: [ 'api_output' ]}]]
+            - [initDenormalizationContext, [{ groups: [ 'api_input' ]}]]
+        tags:
+            - { name: "api.resource" }

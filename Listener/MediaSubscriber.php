@@ -22,11 +22,21 @@ class MediaSubscriber implements EventSubscriber {
     
     public function getSubscribedEvents() {
         return array(
+            'postLoad',
             'prePersist',
             'postPersist',
             'postUpdate',
             'postRemove',
         );
+    }
+
+    /**
+     * event declenché à la creation de l'objet, sert à sauver le fichier si uploadé
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
+    public function postLoad(LifecycleEventArgs $args) {
+        $oMedia = $args->getEntity();
+        if ($oMedia instanceof Media )$this->providerFactory->getProvider($oMedia)->postLoad($oMedia);
     }
 
     /**

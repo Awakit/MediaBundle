@@ -39,7 +39,7 @@ class MediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $provider = $this->providerFactory->getProvider($options['provider']);
-        if ($builder->getData() instanceof Media) $provider->addEditForm($builder);
+        if ($builder->getData() instanceof Media && $builder->getData()->getId()) $provider->addEditForm($builder);
         else $provider->addCreateForm($builder);
 
         $builder->addModelTransformer(new MediaDataTransformer($provider));

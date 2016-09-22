@@ -15,16 +15,16 @@ class PathNode extends \Twig_Node
     /**
      * @param array                 $extensionName
      * @param \Twig_Node_Expression $media
-     * @param \Twig_Node_Expression $format
+     * @param \Twig_Node_Expression $filter
      * @param \Twig_Node_Expression $attributes
      * @param int                   $lineno
      * @param string                $tag
      */
-    public function __construct($extensionName, \Twig_Node_Expression $media, \Twig_Node_Expression $format, $lineno, $tag = null)
+    public function __construct($extensionName, \Twig_Node_Expression $media, \Twig_Node_Expression $filter, $lineno, $tag = null)
     {
         $this->extensionName = $extensionName;
 
-        parent::__construct(array('media' => $media, 'format' => $format), array(), $lineno, $tag);
+        parent::__construct(array('media' => $media, 'filter' => $filter), array(), $lineno, $tag);
     }
 
     /**
@@ -37,7 +37,7 @@ class PathNode extends \Twig_Node
             ->write(sprintf("echo \$this->env->getExtension('%s')->path(", $this->extensionName))
             ->subcompile($this->getNode('media'))
             ->raw(', ')
-            ->subcompile($this->getNode('format'))
+            ->subcompile($this->getNode('filter'))
             ->raw(");\n")
         ;
     }

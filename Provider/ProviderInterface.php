@@ -43,6 +43,12 @@ interface ProviderInterface {
     public function extractMetaData(Media $oMedia);
 
     /**
+     * function called on postLoad Dcotrine Event on MEdia entity
+     * @param Media $oMedia
+     */
+    public function postLoad(Media $oMedia);
+
+    /**
      * function called on prePersist Dcotrine Event on MEdia entity
      * @param Media $oMedia
      */
@@ -86,7 +92,7 @@ interface ProviderInterface {
      * @param \Awakit\MediaBundle\Entity\Media $oMedia
      * @return mixed
      */
-    public function getPath(Media $oMedia, $format= null);
+    public function getPath(Media $oMedia, $filter= null);
 
 
     

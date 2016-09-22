@@ -10,7 +10,7 @@ services:
 
     awakit.media.image.provider:
         class: Awakit\MediaBundle\Provider\ImageProvider
-        arguments: [ "%assetic.write_to%", "%awakit.media.upload_folder%", "@liip_imagine.cache.manager" ]
+        arguments: [ "%assetic.write_to%", "%awakit.media.upload_folder%", "@liip_imagine.cache.manager", "@liip_imagine.filter.configuration" ]
         tags:
             - { name: media.provider, alias: image }
 
