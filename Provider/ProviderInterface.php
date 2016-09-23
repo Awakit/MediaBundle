@@ -4,6 +4,7 @@ namespace Awakit\MediaBundle\Provider;
 
 use Awakit\MediaBundle\Entity\Media;
 use Awakit\MediaBundle\Provider\Exception\InvalidMimeTypeException;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -31,9 +32,16 @@ interface ProviderInterface {
     /**
      * @param \Twig_Environment $twig_Environment
      * @param \Awakit\MediaBundle\Entity\Media $media
-     * @return mixed
+     * @return string
      */
     public function render(\Twig_Environment $twig_Environment, Media $media, $options = array());
+
+
+    /**
+     * @param \Awakit\MediaBundle\Entity\Media $oMedia
+     * @throws TransformationFailedException
+     */
+    public function transform(Media $oMedia);
 
     /**
      * extract data from media, size/height/etc..;

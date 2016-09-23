@@ -52,5 +52,15 @@ abstract class BaseProvider implements ProviderInterface {
         return true;
     }
 
+    public function postLoad(Media $oMedia){}
+
+    public function prePersist(Media $oMedia){}
+
+    public function postPersist(Media $oMedia){}
+
+    public function postUpdate(Media $oMedia){}
+
+    public function postRemove(Media $oMedia){}
+
 
 }

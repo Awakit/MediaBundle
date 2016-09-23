@@ -3,7 +3,9 @@
 namespace Awakit\MediaBundle\Provider;
 
 use Awakit\MediaBundle\Entity\Media;
+use Awakit\MediaBundle\Provider\Exception\InvalidMimeTypeException;
 use Gaufrette\Adapter\Local;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -32,11 +34,6 @@ class FileProvider extends BaseProvider {
         $this->uploadFolder = $uploadFolder;
     }
 
-    public function extractMetaData(Media $media)
-    {
-        //todo extractMetaData from a file ?
-    }
-
     public function render( \Twig_Environment $twig, Media $media, $options = array() ) {
         $options['mediaPath'] = $this->getPath($media, isset($options['filter']) ? $options['filter'] : null );
         return parent::render($twig, $media, $options);
@@ -57,31 +54,37 @@ class FileProvider extends BaseProvider {
     /**
      * @inheritdoc
      */
-    public function postLoad(Media $oMedia)
-    {
-        $oMedia->setPaths(array('reference' => $this->getPath($oMedia)));
-    }
-    /**
-     * @inheritdoc
-     */
-    public function prePersist(Media $oMedia)
+    public function transform(Media $oMedia)
     {
         if ($oMedia->getBinaryContent() instanceof UploadedFile)
             $fileName = $oMedia->getBinaryContent()->getClientOriginalName();
         elseif ($oMedia->getBinaryContent() instanceof File)
             $fileName = $oMedia->getBinaryContent()->getBasename();
 
-        if (empty($fileName)) throw new \RuntimeException('invalid file');
+        if (empty($fileName)) throw new TransformationFailedException('invalid media');
 
         $this->extractMetaData($oMedia);
-
         $mimeType = $oMedia->getBinaryContent()->getMimeType();
-        $this->validateMimeType($mimeType);
+        try {
+            $this->validateMimeType($mimeType);
+        } catch (InvalidMimeTypeException $e)
+        {
+            throw new TransformationFailedException($e->getMessage());
+        }
+
         $oMedia->setMimeType($mimeType);
         $oMedia->setProviderName($this->getAlias());
         $oMedia->setName($oMedia->getName() ? : $fileName); //to keep oldname
+        $oMedia->addMetadata('filename', $fileName);
         $oMedia->setFilename(sha1($oMedia->getName() . rand(11111, 99999)) . '.' . $oMedia->getBinaryContent()->guessExtension());
+    }
 
+    /**
+     * @inheritdoc
+     */
+    public function postLoad(Media $oMedia)
+    {
+        $oMedia->setPaths(array('reference' => $this->getPath($oMedia)));
     }
 
     /**
@@ -104,14 +107,17 @@ class FileProvider extends BaseProvider {
         return $this->postPersist($oMedia);
     }
 
-
-
     /**
      * @inheritdoc
      */
     public function postRemove(Media $oMedia)
     {
         return $this->filesystem->delete($this->getPath($oMedia));
+    }
+
+    public function extractMetaData(Media $oMedia)
+    {
+        // TODO: Implement extractMetaData() method.
     }
 
     public function addEditForm(FormBuilderInterface $builder)

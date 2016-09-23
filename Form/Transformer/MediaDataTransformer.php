@@ -4,9 +4,7 @@ namespace Awakit\MediaBundle\Form\Transformer;
 
 use Awakit\MediaBundle\Provider\ProviderInterface;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 use Awakit\MediaBundle\Entity\Media;
-
 
 
 class MediaDataTransformer implements DataTransformerInterface
@@ -40,13 +38,7 @@ class MediaDataTransformer implements DataTransformerInterface
     {
         if (!($oMedia instanceof Media) || (!$oMedia->getBinaryContent() instanceof \SplFileInfo)) return $oMedia;
 
-
-        try {
-            $this->provider->prePersist($oMedia);
-        } catch (\Exception $e) {
-            throw new TransformationFailedException('invalid file');
-        }
-
+        $this->provider->transform($oMedia);
 
         return $oMedia;
     }
