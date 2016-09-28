@@ -20,38 +20,29 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('upload_folder')->isRequired()->cannotBeEmpty()->end()
-                ->append($this->addLiipImagineNode())
-            ->end()
-        ->end();
-
-        return $treeBuilder;
-    }
-
-
-    public function addLiipImagineNode()
-    {
-        $treeBuilder = new TreeBuilder();
-        $liipNode = $treeBuilder->root('liip_imagine');
-
-        $liipNode->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('resolvers')->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('default')->addDefaultsIfNotSet()
-                            ->children()
-                                ->arrayNode('web_path')->addDefaultsIfNotSet()
-                                    ->children()
-                                        ->scalarNode('cache_prefix')->defaultValue('toto/cache')->cannotBeEmpty()->end()
-                                    ->end()
-                                ->end()
+                ->arrayNode('entities')
+                    ->cannotBeEmpty()
+                    ->useAttributeAsKey('id')
+                    ->prototype('array')
+                        ->children()
+                            ->arrayNode('group_input')
+                                ->cannotBeEmpty()
+                                ->useAttributeAsKey('id')
+                                ->prototype('scalar')->end()
+                                ->defaultValue(array('api_input'))
+                            ->end()
+                            ->arrayNode('group_output')
+                                ->cannotBeEmpty()
+                                ->useAttributeAsKey('id')
+                                ->prototype('scalar')->end()
+                                ->defaultValue(array('api_output'))
                             ->end()
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ->end();
+                ->scalarNode('upload_folder')->isRequired()->cannotBeEmpty()->end()
+            ->end();
 
-        return $liipNode;
+        return $treeBuilder;
     }
 }

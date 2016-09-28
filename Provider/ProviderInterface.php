@@ -2,7 +2,7 @@
 
 namespace Awakit\MediaBundle\Provider;
 
-use Awakit\MediaBundle\Entity\Media;
+use Awakit\MediaBundle\Model\Media;
 use Awakit\MediaBundle\Provider\Exception\InvalidMimeTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,14 +31,14 @@ interface ProviderInterface {
 
     /**
      * @param \Twig_Environment $twig_Environment
-     * @param \Awakit\MediaBundle\Entity\Media $media
+     * @param \Awakit\MediaBundle\Model\Media $media
      * @return string
      */
     public function render(\Twig_Environment $twig_Environment, Media $media, $options = array());
 
 
     /**
-     * @param \Awakit\MediaBundle\Entity\Media $oMedia
+     * @param \Awakit\MediaBundle\Model\Media $oMedia
      * @throws TransformationFailedException
      */
     public function transform(Media $oMedia);
@@ -97,7 +97,7 @@ interface ProviderInterface {
 
     /**
      * return path of the media, depends on the media ^^
-     * @param \Awakit\MediaBundle\Entity\Media $oMedia
+     * @param \Awakit\MediaBundle\Model\Media $oMedia
      * @return mixed
      */
     public function getPath(Media $oMedia, $filter= null);

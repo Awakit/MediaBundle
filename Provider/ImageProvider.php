@@ -2,7 +2,7 @@
 
 namespace Awakit\MediaBundle\Provider;
 
-use Awakit\MediaBundle\Entity\Media;
+use Awakit\MediaBundle\Model\Media;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Liip\ImagineBundle\Imagine\Filter\FilterConfiguration;
 

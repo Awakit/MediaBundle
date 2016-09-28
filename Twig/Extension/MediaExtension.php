@@ -8,7 +8,7 @@
 namespace Awakit\MediaBundle\Twig\Extension;
 
 
-use Awakit\MediaBundle\Entity\Media;
+use Awakit\MediaBundle\Model\Media;
 use Awakit\MediaBundle\Provider\Exception\NotFoundProviderException;
 use Awakit\MediaBundle\Provider\Factory\ProviderFactory;
 use Awakit\MediaBundle\Twig\TokenParser\MediaTokenParser;

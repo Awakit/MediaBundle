@@ -1,5 +1,5 @@
 <?php
-namespace Awakit\MediaBundle\Entity;
+namespace Awakit\MediaBundle\Model;
 
 use Awakit\MediaBundle\Provider\ProviderInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * description 
  * @author Donjohn
- * @ORM\Entity(repositoryClass="Awakit\MediaBundle\Repository\MediaRepository")
+ * Class Article
+ * @ORM\MappedSuperclass(repositoryClass="Awakit\MediaBundle\Repository\MediaRepository")
 */
 
 
@@ -28,20 +29,20 @@ class Media
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Groups({"api"})
+     * @Groups({"api_output"})
     */
     protected $id;
     
     /**
      * @ORM\Column(type="string", nullable=false)
-     * @Groups({"api","api_input"})
-    */
+     * @Groups({"api_output","api_input"})
+     */
     protected $name;
 
     /**
      * @var string
      * @ORM\Column(type="string", nullable=false)
-     * @Groups({"api","api_input"})
+     * @Groups({"api_output","api_input"})
      * @Assert\NotBlank
      */
     protected $providerName;
@@ -58,13 +59,13 @@ class Media
 
     /**
      * @var array collection of paths
-     * @Groups({"api"})
+     * @Groups({"api_output"})
      */
     protected $paths=array();
 
     /**
      * @ORM\Column(type="string", nullable=false)
-     * @Groups({"api"})
+     * @Groups({"api_output"})
      */
     protected $mimeType;
     
@@ -72,19 +73,19 @@ class Media
     
     /**
      * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"api"})
+     * @Groups({"api_output"})
      */
     protected $enabled=true;
     
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"api"})
+     * @Groups({"api_output"})
      */
     protected $description;
     
     /**
      * @ORM\Column(type="json_array", nullable=true)
-     * @Groups({"api"})
+     * @Groups({"api_output"})
      */
     protected $metadata=array();
 

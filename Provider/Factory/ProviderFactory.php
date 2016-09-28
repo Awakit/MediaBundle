@@ -2,7 +2,7 @@
 
 namespace Awakit\MediaBundle\Provider\Factory;
 
-use Awakit\MediaBundle\Entity\Media;
+use Awakit\MediaBundle\Model\Media;
 use Awakit\MediaBundle\Provider\Exception\NotFoundProviderException;
 use Awakit\MediaBundle\Provider\ProviderInterface;
 use RuntimeException;

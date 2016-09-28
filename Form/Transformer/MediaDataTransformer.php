@@ -4,7 +4,7 @@ namespace Awakit\MediaBundle\Form\Transformer;
 
 use Awakit\MediaBundle\Provider\ProviderInterface;
 use Symfony\Component\Form\DataTransformerInterface;
-use Awakit\MediaBundle\Entity\Media;
+use Awakit\MediaBundle\Model\Media;
 
 
 class MediaDataTransformer implements DataTransformerInterface
@@ -13,10 +13,12 @@ class MediaDataTransformer implements DataTransformerInterface
      * @var \Awakit\MediaBundle\Provider\ProviderInterface
      */
     protected $provider;
+    protected $class;
 
-    public function __construct(ProviderInterface $provider)
+    public function __construct(ProviderInterface $provider, $class)
     {
         $this->provider = $provider;
+        $this->class = $class;
     }
 
     /**
@@ -25,7 +27,7 @@ class MediaDataTransformer implements DataTransformerInterface
     public function transform($value)
     {
         if ($value === null) {
-            return new Media();
+            return new $this->class();
         }
 
         return $value;

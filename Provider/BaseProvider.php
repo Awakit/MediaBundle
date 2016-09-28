@@ -2,7 +2,7 @@
 
 namespace Awakit\MediaBundle\Provider;
 
-use Awakit\MediaBundle\Entity\Media;
+use Awakit\MediaBundle\Model\Media;
 use Awakit\MediaBundle\Provider\Exception\InvalidMimeTypeException;
 
 

@@ -8,7 +8,7 @@
 namespace Awakit\MediaBundle\Form;
 
 
-use Awakit\MediaBundle\Entity\Media;
+use Awakit\MediaBundle\Model\Media;
 use Awakit\MediaBundle\Form\Transformer\MediaDataTransformer;
 use Awakit\MediaBundle\Provider\Factory\ProviderFactory;
 use Symfony\Component\Form\AbstractType;
@@ -20,18 +20,18 @@ class MediaType extends AbstractType
     /**
      * @var ProviderFactory
      */
-    public $providerFactory;
+    protected $providerFactory;
 
     public function __construct( ProviderFactory $providerFactory)
     {
         $this->providerFactory = $providerFactory;
     }
 
+
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(array('provider'));
+        $resolver->setRequired(array('provider', 'data_class'));
         $resolver->setDefaults(array(
-                'data_class' => 'Awakit\MediaBundle\Entity\Media',
                 'error_bubbling' => true
                 ));
     }
@@ -42,7 +42,7 @@ class MediaType extends AbstractType
         if ($builder->getData() instanceof Media && $builder->getData()->getId()) $provider->addEditForm($builder);
         else $provider->addCreateForm($builder);
 
-        $builder->addModelTransformer(new MediaDataTransformer($provider));
+        $builder->addModelTransformer(new MediaDataTransformer($provider, $options['data_class']));
 
     }
 

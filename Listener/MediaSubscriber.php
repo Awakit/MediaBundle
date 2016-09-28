@@ -4,7 +4,7 @@ namespace Awakit\MediaBundle\Listener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
-use Awakit\MediaBundle\Entity\Media;
+use Awakit\MediaBundle\Model\Media;
 use Awakit\MediaBundle\Provider\Factory\ProviderFactory;
 
 /**

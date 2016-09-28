@@ -42,9 +42,22 @@ media:
     
 ### Config
 
-Add theses to your config.yml
-see [LiipImagineBundle Configuration](http://symfony.com/doc/current/bundles/LiipImagineBundle/configuration.html)
+Create a new class and extends it with Awakit\MediaBundle\Media
+```
+namespace YourBundle\Entity;
+use Awakit\MediaBundle\Model\Media as BaseMedia;
 
+/**
+ * @ORM\Table()
+ * @ORM\Entity()
+ */
+class YourMedia extends BaseMedia
+{
+
+}
+```
+
+Then add these lines to your config.yml
 ```yaml
 
 doctrine:
@@ -55,19 +68,24 @@ doctrine:
             
 awakit_media:
     upload_folder: /media
+    entities:
+        YourBundle/Entity/YourMedia: ~
+        AnotherBundle/Entity/AnotherMedia: ~ #example, AnotherMedia also extends Awakit\MediaBundle\Entity\Media, you can define as much as media class you need 
 
 liip_imagine:
-    filter_sets:
-        full:
+    filter_sets: #example set, define yours
+        full: 
             quality: 100
         thumb:
             quality: 75
             filters:
                 thumbnail: { size: [120, 90], mode: outbound }
 ```
-    
-If you want another folder for your uploads, don't forget to modify liip setting as well
 
+see [LiipImagineBundle Configuration](http://symfony.com/doc/current/bundles/LiipImagineBundle/configuration.html) for liip filters config
+
+
+If you want another folder for your uploads, don't forget to modify liip setting as well
 ```
 awakit_media:
     upload_folder: /AnotherFolder
@@ -79,8 +97,11 @@ liip_imagine:
                 cache_prefix: AnotherFolder/cache
 ```
 
+
+
 ###Providers
-For the moment only Image and File provider are available.
+For the moment only Image (alias 'image') and File (alias 'file') provider are available.
+
 
 ### Twig
 To insert a media in the twig, use the block with an optionnal filter name, defined in the liip_imagine.filter_sets section.
@@ -96,6 +117,42 @@ you can also ask for the path directly
 
 
 ### FormType
-a Awakit\MediaBundle\Form\Type\MediaType is available. provider option is mandatory.
+a Awakit\MediaBundle\Form\Type\MediaType is available. provider and data_class options are mandatory.
 ```
-$builder->add(<fieldName>,MediaType::class, array('provider'=> 'image'));
+$builder->add(<fieldName>,MediaType::class, array('provider'=> 'image', 'data_class' => 'YourAppBundle:YourMedia));
+```
+
+
+### Api
+This bundle is compatible with DunglasApiBundle and NelmioApiDocBundle. No config is needed.
+2 api groups are already defined for input and output serialization (api_input and api_output). If you wan't to change the groups or add new one. Modify the @Groups annotation in your extended class
+
+```
+namespace YourBundle\Entity;
+use Awakit\MediaBundle\Model\Media as BaseMedia;
+
+/**
+ * @ORM\Table()
+ * @ORM\Entity()
+ */
+class YourMedia extends BaseMedia
+{
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     * @Groups({"new_group_input","another_group_input","new_group_ouput"})
+     */
+    protected $name;
+}
+```
+
+and the in the config.yml, modify the configuration
+
+```
+awakit_media:
+    ...
+    entities:
+        YourBundle\Entity\YourMedia:
+            group_input: ['new_group_input', 'another_group_input']
+            group_output: ['new_group_ouput']
+            
+```
