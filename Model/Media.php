@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * description 
  * @author Donjohn
  * Class Article
- * @ORM\MappedSuperclass(repositoryClass="Awakit\MediaBundle\Repository\MediaRepository")
+ * @ORM\MappedSuperclass()
 */
 
 

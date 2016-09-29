@@ -9,7 +9,7 @@ Add those lines to your composer.json
 #composer.json
     "require": {
         ...
-      "awakit/media-bundle": "~3.*"
+      "awakit/media-bundle": "^3.4"
     },
 
     "repositories": [
@@ -17,6 +17,8 @@ Add those lines to your composer.json
         { "type": "composer", "url": "http://packages.awakit:8000/" }
     ],
 ```
+
+and update
 
 ### Kernel
 
@@ -56,6 +58,7 @@ class YourMedia extends BaseMedia
 
 }
 ```
+
 
 Then add these lines to your config.yml
 ```yaml
