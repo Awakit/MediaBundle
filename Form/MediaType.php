@@ -30,16 +30,19 @@ class MediaType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(array('provider', 'data_class'));
+        $resolver->setRequired(array('data_class'));
         $resolver->setDefaults(array(
-                'error_bubbling' => true
+                'error_bubbling' => true,
+                'provider' => 'file'
                 ));
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $provider = $this->providerFactory->getProvider($options['provider']);
-        if ($builder->getData() instanceof Media && $builder->getData()->getId()) $provider->addEditForm($builder);
+        $media = ($builder->getData() instanceof Media && $builder->getData()->getId()) ? $builder->getData() : null;
+        $provider = $this->providerFactory->getProvider($media ? $media->getProviderName() : $options['provider']);
+
+        if ($media) $provider->addEditForm($builder);
         else $provider->addCreateForm($builder);
 
         $builder->addModelTransformer(new MediaDataTransformer($provider, $options['data_class']));

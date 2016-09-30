@@ -26,6 +26,7 @@ class Media
 
     
     /**
+     * @var integer
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -34,8 +35,10 @@ class Media
     protected $id;
     
     /**
+     * @var string
      * @ORM\Column(type="string", nullable=false)
      * @Groups({"api_output","api_input"})
+     * @Assert\NotBlank
      */
     protected $name;
 
@@ -64,6 +67,7 @@ class Media
     protected $paths=array();
 
     /**
+     * @var string
      * @ORM\Column(type="string", nullable=false)
      * @Groups({"api_output"})
      */
@@ -72,27 +76,33 @@ class Media
     protected $oldMimeType;
     
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"api_output"})
-     */
-    protected $enabled=true;
-    
-    /**
+     * @var string
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"api_output"})
+     * @Groups({"api_output","api_input"})
      */
     protected $description;
     
     /**
+     * @var array
      * @ORM\Column(type="json_array", nullable=true)
      * @Groups({"api_output"})
      */
     protected $metadata=array();
 
     /**
+     * @var string|File|UploadedFile
      * @Groups({"api_input"})
      */
     protected $binaryContent;
+
+    /**
+     * @Assert\IsTrue(message="binaryContent can't be empty or null on creation")
+     */
+    public function isBinaryContentOnCreation()
+    {
+        return $this->id ||(!$this->id && $this->binaryContent);
+        //id ou (pas id et binary)
+    }
 
     /**
      * return old Media
@@ -214,39 +224,6 @@ class Media
     public function getMetadata()
     {
         return $this->metadata;
-    }
-
-    /**
-     * Set enabled
-     *
-     * @param boolean $enabled
-     * @return Media
-     */
-    public function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    /**
-     * Get enabled
-     *
-     * @return boolean 
-     */
-    public function getEnabled()
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * Get enabled
-     *
-     * @return boolean
-     */
-    public function isEnabled()
-    {
-        return $this->enabled;
     }
 
     /**

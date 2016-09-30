@@ -51,8 +51,8 @@ class AwakitMediaExtension extends Extension
     {
         $definition = new Definition('Dunglas\ApiBundle\Api\Resource', array($classMedia));
         $definition
-                ->addMethodCall('initNormalizationContext', array('groups' => $configClassMedia['group_output']))//array('api_output')))
-                ->addMethodCall('initDenormalizationContext', array('groups' => $configClassMedia['group_input']))// array('api_input')))
+                ->addMethodCall('initNormalizationContext', array(array('groups' => $configClassMedia['group_output'])))
+                ->addMethodCall('initDenormalizationContext', array(array('groups' => $configClassMedia['group_input'])))
                 ->addTag('api.resource');
         return $definition;
     }

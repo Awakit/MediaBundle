@@ -120,7 +120,9 @@ you can also ask for the path directly
 
 
 ### FormType
-a Awakit\MediaBundle\Form\Type\MediaType is available. provider and data_class options are mandatory.
+An Awakit\MediaBundle\Form\Type\MediaType is available. Only 'data_class' option is mandatory.
+'provider' option default value is 'file', change it if you wanna create a media with another provider (ex 'image').
+In case you're editing a persisted media object, the option is overwritten by $media->getProviderName() value in any case
 ```
 $builder->add(<fieldName>,MediaType::class, array('provider'=> 'image', 'data_class' => 'YourAppBundle:YourMedia));
 ```
