@@ -1,5 +1,8 @@
+parameters:
+    awakit.media.filter.loader.scale.class: Awakit\MediaBundle\Filter\Loader\ScaleFilterLoader
+
 services:
     awakit.media.filter.loader.scale:
-        class: Awakit\MediaBundle\Filter\Loader\ScaleFilterLoader
+        class: "%awakit.media.filter.loader.scale.class%"
         tags:
             - { name: liip_imagine.filter.loader, loader: scale }

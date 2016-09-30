@@ -1,6 +1,9 @@
+parameters:
+    awakit.media.subscriber.class: Awakit\MediaBundle\Listener\MediaSubscriber
+
 services:
     awakit.media.subscriber:
-        class: Awakit\MediaBundle\Listener\MediaSubscriber
+        class: "%awakit.media.subscriber.class%"
         arguments:
             - "@awakit.media.provider.factory"
         tags:
