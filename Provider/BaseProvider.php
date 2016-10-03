@@ -48,7 +48,8 @@ abstract class BaseProvider implements ProviderInterface {
      */
     final public function validateMimeType($type)
     {
-        if (count($this->allowedTypes)> 0 && !in_array($type,$this->allowedTypes)) throw new InvalidMimeTypeException(sprintf('provider %s does not support %s, it supports only [%s]', $this->getAlias(), $type, implode(',', $this->allowedTypes)));
+        if (count($this->allowedTypes) && !preg_match('#'.implode('|',$this->allowedTypes).'#', $type)) throw new InvalidMimeTypeException(sprintf('provider %s does not support %s, it supports only [%s]', $this->getAlias(), $type, implode(',', $this->allowedTypes)));
+
         return true;
     }
 

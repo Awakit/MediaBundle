@@ -22,6 +22,8 @@ class FileProvider extends BaseProvider {
      */
     protected $filesystem;
 
+    public $allowedTypes=array('[a-z]+/[a-z]+');
+
     protected $rootFolder;
     protected $uploadFolder;
 
@@ -56,16 +58,31 @@ class FileProvider extends BaseProvider {
      */
     public function transform(Media $oMedia)
     {
-        if ($oMedia->getBinaryContent() instanceof UploadedFile)
+        $matches=array(); $fileName='';
+
+        //si c'est un stream file http://php.net/manual/en/wrappers.data.php
+        if (preg_match('#data:('.implode('|', $this->allowedTypes).');base64,.*#', $oMedia->getBinaryContent(),$matches)) {
+            $tmpFile = tempnam(sys_get_temp_dir(), $this->getAlias());
+            $source = fopen($oMedia->getBinaryContent(), 'r');
+            $destination = fopen($tmpFile, 'w');
+            stream_copy_to_stream($source, $destination);
+            fclose($source);
+            fclose($destination);
+            $oMedia->setBinaryContent(new UploadedFile($tmpFile, basename($tmpFile), $matches[1]));
+        }
+
+        if ($oMedia->getBinaryContent() instanceof UploadedFile) {
             $fileName = $oMedia->getBinaryContent()->getClientOriginalName();
-        elseif ($oMedia->getBinaryContent() instanceof File)
+
+        } elseif ($oMedia->getBinaryContent() instanceof File) {
             $fileName = $oMedia->getBinaryContent()->getBasename();
+        }
 
         if (empty($fileName)) throw new TransformationFailedException('invalid media');
 
-        $this->extractMetaData($oMedia);
         $mimeType = $oMedia->getBinaryContent()->getMimeType();
         try {
+            $this->extractMetaData($oMedia);
             $this->validateMimeType($mimeType);
         } catch (InvalidMimeTypeException $e)
         {
@@ -76,7 +93,12 @@ class FileProvider extends BaseProvider {
         $oMedia->setProviderName($this->getAlias());
         $oMedia->setName($oMedia->getName() ? : $fileName); //to keep oldname
         $oMedia->addMetadata('filename', $fileName);
-        $oMedia->setFilename(sha1($oMedia->getName() . rand(11111, 99999)) . '.' . $oMedia->getBinaryContent()->guessExtension());
+
+        $oMedia->setFilename(
+            sha1($oMedia->getName() . rand(11111, 99999)) . '.' .
+            ($oMedia->getBinaryContent() instanceof \Gaufrette\File
+                ? substr($mimeType, strpos($mimeType, '/')+1)
+                : $oMedia->getBinaryContent()->guessExtension()));
     }
 
     /**

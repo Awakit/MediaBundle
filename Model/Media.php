@@ -52,6 +52,7 @@ class Media
     
     /**
      * @ORM\Column(type="string", nullable=false)
+     * @Groups({"api_output"})
      */
     protected $filename;
 

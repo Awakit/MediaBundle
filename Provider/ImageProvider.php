@@ -12,7 +12,7 @@ use Liip\ImagineBundle\Imagine\Filter\FilterConfiguration;
  */
 class ImageProvider extends FileProvider  {
     
-    public $allowedTypes=array('image/jpeg');
+    public $allowedTypes=array('image/jpeg', 'image/png');
     /**
      * @var CacheManager $cacheManager
      */

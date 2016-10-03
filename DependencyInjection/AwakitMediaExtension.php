@@ -37,7 +37,10 @@ class AwakitMediaExtension extends Extension
 
         //delcaration des services api pour ttoues les entites dans la conf
         if (isset($bundles['DunglasApiBundle'])){
-            foreach ($config['entities'] as $classMedia => $configClassMedia) $container->setDefinition(sprintf('awakit.media.api.resource.%s', $classMedia), $this->createApiService($classMedia, $configClassMedia));
+            foreach ($config['entities'] as $classMedia => $configClassMedia) {
+                $container->setDefinition(sprintf('awakit.media.api.resource.%s', $classMedia), $this->createApiService($classMedia, $configClassMedia));
+                $container->setDefinition(sprintf('awakit.media.api.listener.%s', $classMedia), $this->createApiListenerService($container->getDefinition('awakit.media.provider.factory')));
+            }
         }
 
     }
@@ -54,6 +57,18 @@ class AwakitMediaExtension extends Extension
                 ->addMethodCall('initNormalizationContext', array(array('groups' => $configClassMedia['group_output'])))
                 ->addMethodCall('initDenormalizationContext', array(array('groups' => $configClassMedia['group_input'])))
                 ->addTag('api.resource');
+        return $definition;
+    }
+
+    /**
+     * @param $classMedia
+     * @return \Symfony\Component\DependencyInjection\Definition
+     */
+    protected function createApiListenerService($providerFactoryClass)
+    {
+        $definition = new Definition('Awakit\MediaBundle\Listener\ApiListener', array($providerFactoryClass));
+        $definition->addTag('kernel.event_listener', array('event' => 'api.pre_create', 'method' => 'onPreCreate'));
+        $definition->addTag('kernel.event_listener', array('event' => 'api.post_create', 'method' => 'onPostCreate'));
         return $definition;
     }
 
