@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 
@@ -17,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author Donjohn
  * Class Article
  * @ORM\MappedSuperclass()
+ * @UniqueEntity("name")
 */
 
 
@@ -36,7 +38,7 @@ class Media
     
     /**
      * @var string
-     * @ORM\Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false, unique=true)
      * @Groups({"api_output","api_input"})
      * @Assert\NotBlank
      */
