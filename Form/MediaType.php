@@ -42,12 +42,11 @@ class MediaType extends AbstractType
         $media = ($builder->getData() instanceof Media && $builder->getData()->getId()) ? $builder->getData() : null;
         $provider = $this->providerFactory->getProvider($media ? $media->getProviderName() : $options['provider']);
 
-        if ($media) $provider->addEditForm($builder);
-        else $provider->addCreateForm($builder);
+        if ($media) $provider->addEditForm($builder, $options);
+        else $provider->addCreateForm($builder, $options);
 
         $builder->addModelTransformer(new MediaDataTransformer($provider, $options['data_class']));
 
     }
-
 
 }

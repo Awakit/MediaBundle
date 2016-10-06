@@ -40,7 +40,6 @@ class Media
      * @var string
      * @ORM\Column(type="string", nullable=false, unique=true)
      * @Groups({"api_output","api_input"})
-     * @Assert\NotBlank
      */
     protected $name;
 
@@ -48,7 +47,6 @@ class Media
      * @var string
      * @ORM\Column(type="string", nullable=false)
      * @Groups({"api_output","api_input"})
-     * @Assert\NotBlank
      */
     protected $providerName;
     

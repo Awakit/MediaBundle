@@ -86,14 +86,14 @@ interface ProviderInterface {
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return mixed
      */
-    public function addEditForm(FormBuilderInterface $builder);
+    public function addEditForm(FormBuilderInterface $builder, array $options);
 
     /**
      * add create fields for the defined provider
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return mixed
      */
-    public function addCreateForm(FormBuilderInterface $builder);
+    public function addCreateForm(FormBuilderInterface $builder, array $options);
 
     /**
      * return path of the media, depends on the media ^^

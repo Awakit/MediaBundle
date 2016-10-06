@@ -142,12 +142,12 @@ class FileProvider extends BaseProvider {
         // TODO: Implement extractMetaData() method.
     }
 
-    public function addEditForm(FormBuilderInterface $builder)
+    public function addEditForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('binaryContent', FileType::class, array('required' => false));
     }
 
-    public function addCreateForm(FormBuilderInterface $builder)
+    public function addCreateForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('binaryContent', FileType::class);
     }
