@@ -161,3 +161,14 @@ awakit_media:
             group_output: ['new_group_ouput']
             
 ```
+
+### Custom MediaProvider
+To implement your own provider, use the ProviderInterface or extends the BaseProvider (easier) 
+then defined it as a service with the tag media.provider (beware, the alias must be the same as YourProvider->getAlias())
+
+```
+app.media.your_type.provider:
+        class: YouApp\YourBundle\YourProvider
+        tags:
+            - { name: media.provider, alias: file }
+```            
