@@ -44,8 +44,8 @@ class MediaExtension extends \Twig_Extension
     public function getTokenParsers()
     {
         return array(
-            new MediaTokenParser($this->getName()),
-            new PathTokenParser($this->getName()),
+            new MediaTokenParser(self::class),
+            new PathTokenParser(self::class),
         );
     }
 
