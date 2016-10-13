@@ -26,10 +26,6 @@ class MediaDataTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if ($value === null) {
-            return new $this->class();
-        }
-
         return $value;
     }
 
