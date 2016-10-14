@@ -1,5 +1,5 @@
 <?php
-namespace Awakit\MediaBundle\Provider\Factory;
+namespace Awakit\MediaBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

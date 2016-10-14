@@ -13,6 +13,8 @@ use Awakit\MediaBundle\Form\Transformer\MediaDataTransformer;
 use Awakit\MediaBundle\Provider\Factory\ProviderFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MediaType extends AbstractType
@@ -33,7 +35,8 @@ class MediaType extends AbstractType
         $resolver->setRequired(array('data_class'));
         $resolver->setDefaults(array(
                 'error_bubbling' => true,
-                'provider' => 'file'
+                'provider' => 'file',
+                'dropzone' => false,
                 ));
     }
 
@@ -47,6 +50,14 @@ class MediaType extends AbstractType
 
         $builder->addModelTransformer(new MediaDataTransformer($provider, $options['data_class']));
 
+    }
+
+    public function buildView(
+        FormView $view,
+        FormInterface $form,
+        array $options
+    ) {
+        $view->vars['dropzone'] = $options['dropzone'];
     }
 
 }

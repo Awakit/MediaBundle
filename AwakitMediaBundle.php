@@ -2,7 +2,8 @@
 
 namespace Awakit\MediaBundle;
 
-use Awakit\MediaBundle\Provider\Factory\ProviderCompilerPass;
+use Awakit\MediaBundle\DependencyInjection\Compiler\FormCompilerPass;
+use Awakit\MediaBundle\DependencyInjection\Compiler\ProviderCompilerPass;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -17,6 +18,7 @@ class AwakitMediaBundle extends Bundle
             $container->addCompilerPass( DoctrineOrmMappingsPass::createAnnotationMappingDriver( array('Awakit\MediaBundle\Model') , array(realpath(__DIR__.DIRECTORY_SEPARATOR.'Model')) ));
 
         $container->addCompilerPass(new ProviderCompilerPass());
+        $container->addCompilerPass(new FormCompilerPass());
 
     }
 }

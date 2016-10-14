@@ -1,0 +1,40 @@
+{% extends 'form_div_layout.html.twig' %}
+
+
+
+{% block file_row %}
+    {% if not form.parent.vars.dropzone|default(false) %}
+        {{ form_row(form) }}
+    {% else %}
+        <div class="dropzone-previews"></div>
+        <div class="dz-default dz-message">
+            {{ 'form.media.dropzone.message'|trans }}
+        </div>
+        <div class="fallback">
+        {{ form_row(form) }}
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function(event) {
+                Dropzone.autoDiscover = false;
+                Dropzone.options = {
+                                paramName: "{{ full_name }}",
+                                url: "{{ app.request.requestUri}}",
+                                autoProcessQueue: false,
+                                previewsContainer: ".dropzone-previews",
+                                init: function() {
+                                    var myDropzone = this;
+
+                                    $("#{{ form.parent.vars.id }}").closest('form').submit(function (e) {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+                                                myDropzone.processQueue();
+                                            }
+                                    );
+
+                                }
+                            };
+                $("#{{ form.parent.vars.id }}").closest('form').addClass('dropzone').dropzone(Dropzone.options);
+            });
+        </script>
+    {% endif %}
+{% endblock %}

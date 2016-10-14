@@ -171,4 +171,14 @@ app.media.your_type.provider:
         class: YouApp\YourBundle\YourProvider
         tags:
             - { name: media.provider, alias: file }
-```            
+``` 
+
+
+### Dropzone
+The MediaType is compatible with [dropzone.js](http://www.dropzonejs.com/) , set true to 'dropzone' option
+```
+$builder = $this->createFormBuilder();
+$builder->add('media', MediaType::class, array( ... ,'dropzone' => true ) );
+```
+
+Don't forget to add the js and css provided by dropzone install to your layout.
