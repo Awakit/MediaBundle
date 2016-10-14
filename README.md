@@ -175,7 +175,8 @@ app.media.your_type.provider:
 
 
 ### Dropzone
-The MediaType is compatible with [dropzone.js](http://www.dropzonejs.com/) , set true to 'dropzone' option
+The MediaType is compatible with [dropzone.js](http://www.dropzonejs.com/) , set true to 'dropzone' option.
+Beware you can't use twice MediaType with dropzone option set to true within the same form (blame dropzone, or me, prehaps i'm dumb)
 ```
 $builder = $this->createFormBuilder();
 $builder->add('media', MediaType::class, array( ... ,'dropzone' => true ) );
