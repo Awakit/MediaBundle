@@ -1,7 +1,3 @@
-{% extends 'form_div_layout.html.twig' %}
-
-
-
 {% block file_row %}
     {% if not form.parent.vars.dropzone|default(false) %}
         {{ form_row(form) }}
