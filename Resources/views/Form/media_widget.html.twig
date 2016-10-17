@@ -8,25 +8,28 @@
     {% else %}
         <div class="dropzone-previews"></div>
         <div class="dz-default dz-message">
-            {{ 'form.media.dropzone.message'|trans }}
+            {{ 'dropzone.message'|trans({}, 'AwakitMediaBundle') }}
         </div>
         <div class="fallback">
         {{ form_row(form) }}
         </div>
         <script>
-            document.addEventListener("DOMContentLoaded", function(event) {
+            document.addEventListener("DOMContentLoaded", function() {
                 Dropzone.autoDiscover = false;
                 Dropzone.options = {
                                 paramName: "{{ full_name }}",
                                 url: "{{ app.request.requestUri}}",
                                 autoProcessQueue: false,
+                                maxFiles: {{ form.parent.vars.maxFiles }},
+                                parallelUploads: {{ form.parent.vars.maxFiles }},
+                                uploadMultiple: false,
                                 previewsContainer: ".dropzone-previews",
                                 init: function() {
                                     var myDropzone = this;
 
-                                    $("#{{ form.parent.vars.id }}").closest('form').submit(function (e) {
-                                                e.preventDefault();
-                                                e.stopPropagation();
+                                    $("#{{ form.parent.vars.id }}").closest('form').submit(function (event) {
+                                                event.preventDefault();
+                                                event.stopPropagation();
                                                 myDropzone.processQueue();
                                             }
                                     );

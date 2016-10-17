@@ -34,9 +34,12 @@ class MediaType extends AbstractType
     {
         $resolver->setRequired(array('data_class'));
         $resolver->setDefaults(array(
+                'translation_domain' => 'AwakitMediaBundle',
                 'error_bubbling' => true,
                 'provider' => 'file',
                 'dropzone' => false,
+                'maxFiles' => 1,
+                'label' => 'awakit_media',
                 ));
     }
 
@@ -58,6 +61,7 @@ class MediaType extends AbstractType
         array $options
     ) {
         $view->vars['dropzone'] = $options['dropzone'];
+        $view->vars['maxFiles'] = $options['maxFiles'];
     }
 
 }
