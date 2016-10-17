@@ -39,7 +39,7 @@ class MediaType extends AbstractType
                 'provider' => 'file',
                 'dropzone' => false,
                 'maxFiles' => 1,
-                'label' => 'awakit_media',
+                'label' => 'media',
                 ));
     }
 

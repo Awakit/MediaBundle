@@ -144,12 +144,12 @@ class FileProvider extends BaseProvider {
 
     public function addEditForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('binaryContent', FileType::class, array('required' => false));
+        $builder->add('binaryContent', FileType::class, array('required' => false, 'translation_domain' => 'AwakitMediaBundle', 'label' => 'media.'.$this->getAlias().'.binaryContent'));
     }
 
     public function addCreateForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('binaryContent', FileType::class);
+        $builder->add('binaryContent', FileType::class, array('translation_domain' => 'AwakitMediaBundle', 'label' => 'media.'.$this->getAlias().'.binaryContent') );
     }
 
 

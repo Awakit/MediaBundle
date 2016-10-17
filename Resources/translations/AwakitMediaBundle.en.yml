@@ -1,2 +1,4 @@
-awakit_media: Media
+media: Media
 dropzone.message: Drop your files here!
+media.file.binaryContent: File
+media.image.binaryContent: Image

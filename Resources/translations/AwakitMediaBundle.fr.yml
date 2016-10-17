@@ -1,2 +1,4 @@
-awakit_media: Media
-dropzone.message: Glissez vos fichiers ici !
+media: Media
+dropzone.message: Glissez vos fichiers ici.
+media.file.binaryContent: Fichier
+media.file.binaryContent: Image
