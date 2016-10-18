@@ -7,9 +7,6 @@
 
 namespace Awakit\MediaBundle\Twig\TokenParser;
 
-
-
-
 use Awakit\MediaBundle\Twig\Node\MediaNode;
 
 class MediaTokenParser extends \Twig_TokenParser
@@ -31,14 +28,19 @@ class MediaTokenParser extends \Twig_TokenParser
     {
         $media = $this->parser->getExpressionParser()->parseExpression();
         $filter = new \Twig_Node_Expression_Constant('reference',$token->getLine());
+        $attributes = new \Twig_Node_Expression_Array(array(), $token->getLine());
 
-        if (!$this->parser->getStream()->nextIf(\Twig_Token::BLOCK_END_TYPE)) {
-            $this->parser->getStream()->next();
+        if ($this->parser->getStream()->nextIf(\Twig_Token::PUNCTUATION_TYPE)) {
             $filter = $this->parser->getExpressionParser()->parseExpression();
-            $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
         }
 
-        return new MediaNode($this->extensionName, $media, $filter, $token->getLine(), $this->getTag());
+        // attributes
+        if ($this->parser->getStream()->nextIf(\Twig_Token::NAME_TYPE, 'with')) {
+            $attributes = $this->parser->getExpressionParser()->parseExpression();
+        }
+        $this->parser->getStream()->expect(\Twig_Token::BLOCK_END_TYPE);
+
+        return new MediaNode($this->extensionName, $media, $filter, $attributes, $token->getLine(), $this->getTag());
     }
 
     /**

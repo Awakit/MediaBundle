@@ -112,6 +112,11 @@ If you don't provider a filter name, 'reference' filter is default. it will retu
 ```
 {% media mediaObject, '<filter>' %}
 ```
+You can also pass class/width/height/alt options to the media rendering:
+```
+{% media mediaObject, '<filter>' with {class: 'classwanted class2wanted', alt: 'title', width: '200px', height: '50px'} %}
+```
+
 
 you can also ask for the path directly
 ```

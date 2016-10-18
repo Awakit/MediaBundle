@@ -20,11 +20,11 @@ class MediaNode extends \Twig_Node
      * @param int                   $lineno
      * @param string                $tag
      */
-    public function __construct($extensionName, \Twig_Node_Expression $media, \Twig_Node_Expression $filter, $lineno, $tag = null)
+    public function __construct($extensionName, \Twig_Node_Expression $media, \Twig_Node_Expression $filter, \Twig_Node_Expression $attributes, $lineno, $tag = null)
     {
         $this->extensionName = $extensionName;
 
-        parent::__construct(array('media' => $media, 'filter' => $filter), array(), $lineno, $tag);
+        parent::__construct(array('media' => $media, 'filter' => $filter, 'attributes' => $attributes), array(), $lineno, $tag);
     }
 
     /**
@@ -38,6 +38,8 @@ class MediaNode extends \Twig_Node
             ->subcompile($this->getNode('media'))
             ->raw(', ')
             ->subcompile($this->getNode('filter'))
+            ->raw(', ')
+            ->subcompile($this->getNode('attributes'))
             ->raw(");\n")
         ;
     }

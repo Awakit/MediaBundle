@@ -54,7 +54,7 @@ class MediaExtension extends \Twig_Extension
         return 'awakit_media';
     }
 
-    public function media(Media $media = null, $filter)
+    public function media(Media $media = null, $filter, $attributes)
     {
 
         try {
@@ -63,8 +63,8 @@ class MediaExtension extends \Twig_Extension
         catch (NotFoundProviderException $e) {
             return '';
         }
-
-        return $provider->render($this->twig, $media, array('filter' => $filter));
+        $attributes = array_merge($attributes, array('filter' => $filter));
+        return $provider->render($this->twig, $media, $attributes);
 
     }
 
