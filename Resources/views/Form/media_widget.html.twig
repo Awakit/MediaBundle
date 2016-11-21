@@ -29,9 +29,17 @@
                                                 myDropzone.processQueue();
                                             }
                                     );
-
+                                },
+                    {% if form.parent.vars.redirect|default(false) %}
+                                complete: function(){
+                                    var myDropzone = this;
+                                    if (myDropzone.getRejectedFiles().length==0){
+                                        window.location={{ path(form.parent.vars.redirect) }};
+                                    }
                                 }
+                    {% endif %}
                             };
+
                 $("#{{ form.parent.vars.id }}").closest('form').addClass('dropzone').dropzone(Dropzone.options);
             });
         </script>

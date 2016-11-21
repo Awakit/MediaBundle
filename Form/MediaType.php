@@ -38,8 +38,10 @@ class MediaType extends AbstractType
                 'error_bubbling' => true,
                 'provider' => 'file',
                 'dropzone' => false,
+                'redirect' => false,
                 'maxFiles' => 1,
                 'label' => 'media',
+
                 ));
     }
 
@@ -61,6 +63,7 @@ class MediaType extends AbstractType
         array $options
     ) {
         $view->vars['dropzone'] = $options['dropzone'];
+        $view->vars['redirect'] = $options['redirect'];
         $view->vars['maxFiles'] = $options['maxFiles'];
     }
 
