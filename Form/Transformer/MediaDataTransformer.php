@@ -13,12 +13,10 @@ class MediaDataTransformer implements DataTransformerInterface
      * @var \Awakit\MediaBundle\Provider\ProviderInterface
      */
     protected $provider;
-    protected $class;
 
-    public function __construct(ProviderInterface $provider, $class)
+    public function __construct(ProviderInterface $provider)
     {
         $this->provider = $provider;
-        $this->class = $class;
     }
 
     /**

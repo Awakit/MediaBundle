@@ -51,7 +51,7 @@ class MediaType extends AbstractType
         if ($media) $provider->addEditForm($builder, $options);
         else $provider->addCreateForm($builder, $options);
 
-        $builder->addModelTransformer(new MediaDataTransformer($provider, $options['data_class']));
+        $builder->addModelTransformer(new MediaDataTransformer($provider));
 
     }
 
