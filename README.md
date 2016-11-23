@@ -135,7 +135,7 @@ $builder->add(<fieldName>,MediaType::class, array('provider'=> 'image', 'data_cl
 
 ### Api
 This bundle is compatible with DunglasApiBundle and NelmioApiDocBundle. No config is needed.
-2 api groups are already defined for input and output serialization (api_input and api_output). If you wan't to change the groups or add new one. Modify the @Groups annotation in your extended class
+2 api groups are already defined for input and output serialization (api_input and api_output). If you want to change the groups or add new one. Modify the @Groups annotation in your extended class
 
 ```
 namespace YourBundle\Entity;

@@ -31,6 +31,9 @@ class AwakitMediaExtension extends Extension
         $loader->load('form.yml');
         $loader->load('twig.yml');
 
+        //on sauve la liste des entites media
+        $container->setParameter('awakit.media.entities', array_keys($config['entities']));
+
         //until liiPbundle 2.0 is released, i need this filter
         if (isset($bundles['LiipImagineBundle']) && !class_exists('Liip\ImagineBundle\Imagine\Filter\Loader\ScaleFilterLoader'))
             $loader->load('imagine.yml');
