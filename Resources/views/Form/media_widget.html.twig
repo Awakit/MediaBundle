@@ -2,6 +2,11 @@
     {% if not form.parent.vars.dropzone|default(false) %}
         {{ form_row(form) }}
     {% else %}
+        {% if form.parent.vars.data is defined and form.parent.vars.data is not null %}
+            {% if form.parent.vars.data.providerName == 'image' %}
+                <img src="{{ form.parent.vars.data.paths.reference }}">
+            {% endif %}
+        {% endif %}
         <div class="dropzone-previews"></div>
         <div class="dz-default dz-message">
             {{ 'dropzone.message'|trans({}, 'AwakitMediaBundle') }}
